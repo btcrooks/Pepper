@@ -1,10 +1,10 @@
 # Disable PyFlakes: let g:pymode_lint = 0
-import math
+#import math
 
 class Pepper:
   # Maths
-  def roundUp(self,x):
-    return int(math.ceil(x / 10.0)) * 10
+  #def roundUp(self,x):
+    #return int(math.ceil(x / 10.0)) * 10
     #return x
   # Coordinates
   def printMouseCoordinates(self):
@@ -25,7 +25,7 @@ class Pepper:
   green = color(0,255,0)
   blue  = color(0,0,255)
   ## Color State
-  color_state = red
+  color_state = 1
   # Log to console
   def log(self):
     print "Editor:"
@@ -52,7 +52,11 @@ class Grid:
     for col in grid.cell:
       for row in col:
         if row == 1:
-          fill(pepper.color_state)
+          fill(pepper.red)
+        elif row == 2:
+          fill(pepper.green)
+        elif row == 3:
+          fill(pepper.blue)
         else:
           fill(255,255,255)
         rect(posx,posy,grid.cell_width,grid.cell_height)
@@ -98,6 +102,7 @@ for row in range(grid.row):
 def setup():
   size(stage.width,stage.height)
   background(stage.background_color)
+  smooth()
   grid.cell[1][1] = 1
   # Log all the things
   print "Setup Log:"
@@ -108,16 +113,23 @@ def setup():
 def draw():
   stroke(222,0,0)
   grid.draw()
-  if keyPressed:
-    if key == 'b':
-      pepper.color_state = pepper.blue
 
 def mousePressed():
   x = pepper.mouseCellPosition("x")
   y = pepper.mouseCellPosition("y")
-  if grid.cell[x][y] == 1:
+  if grid.cell[x][y] == pepper.color_state:
     grid.cell[x][y] = 0
-  elif grid.cell[x][y] == 0:
-    grid.cell[x][y] = 1
+  elif grid.cell[x][y] != pepper.color_state:
+    grid.cell[x][y] = pepper.color_state
   else:
     pass
+
+def keyPressed():
+  k = str(key)
+  print k
+  if k == "1":
+    pepper.color_state = 1
+  if k == "2":
+    pepper.color_state = 2
+  if k == "3":
+    pepper.color_state = 3
