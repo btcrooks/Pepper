@@ -122,7 +122,8 @@ def draw():
 def mousePressed():
   x = pepper.mouseCellPosition("x")
   y = pepper.mouseCellPosition("y")
-  if (pepper.mouseCellPosition("x") <= len(grid.cell)) and (pepper.mouseCellPosition("y") <= len(grid.cell)):
+  if (pepper.mouseCellPosition("x") <= len(grid.cell)) and\
+  (pepper.mouseCellPosition("y") <= len(grid.cell)):
     if grid.cell[x][y] == pepper.color_state:
       grid.cell[x][y] = 0
     elif grid.cell[x][y] != pepper.color_state:
