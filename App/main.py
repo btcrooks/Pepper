@@ -24,6 +24,7 @@ class Pepper:
   red   = color(255,0,0)
   green = color(0,255,0)
   blue  = color(0,0,255)
+  black = color(0)
   ## Color State
   color_state = 1
   # Log to console
@@ -35,7 +36,8 @@ class Pepper:
 class Stage:
   width = 1280
   height = 720
-  background_color = 20
+  background_color = 30
+  stroke_color = 20
 
 class Grid:
   def __init__(self, row, col, cell_dimensions, margin):
@@ -58,7 +60,7 @@ class Grid:
         elif row == 3:
           fill(pepper.blue)
         else:
-          fill(255,255,255)
+          fill(55)
         rect(posx,posy,grid.cell_width,grid.cell_height)
         posy = posy + grid.cell_height
       posx = posx + grid.cell_width
@@ -111,7 +113,7 @@ def setup():
   print ""
 
 def draw():
-  stroke(222,0,0)
+  stroke(stage.stroke_color)
   grid.draw()
 
 def mousePressed():
