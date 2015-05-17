@@ -1,5 +1,6 @@
 # Disable PyFlakes: let g:pymode_lint = 0
 #import math
+import sys
 
 class Pepper:
   # Maths
@@ -36,8 +37,8 @@ class Pepper:
 class Stage:
   width = 1280
   height = 720
-  background_color = 30
-  stroke_color = 20
+  background_color = 20
+  stroke_color = 15
 
 class Grid:
   def __init__(self, row, col, cell_dimensions, margin):
@@ -60,7 +61,7 @@ class Grid:
         elif row == 3:
           fill(pepper.blue)
         else:
-          fill(55)
+          fill(25)
         rect(posx,posy,grid.cell_width,grid.cell_height)
         posy = posy + grid.cell_height
       posx = posx + grid.cell_width
@@ -108,9 +109,11 @@ def setup():
   grid.cell[1][1] = 1
   # Log all the things
   print "Setup Log:"
+  print sys.path
   pepper.log()
   grid.log()
   print ""
+  print "Logging keyCdes:"
 
 def draw():
   stroke(stage.stroke_color)
@@ -119,12 +122,15 @@ def draw():
 def mousePressed():
   x = pepper.mouseCellPosition("x")
   y = pepper.mouseCellPosition("y")
-  if grid.cell[x][y] == pepper.color_state:
-    grid.cell[x][y] = 0
-  elif grid.cell[x][y] != pepper.color_state:
-    grid.cell[x][y] = pepper.color_state
+  if (pepper.mouseCellPosition("x") <= len(grid.cell)) and (pepper.mouseCellPosition("y") <= len(grid.cell)):
+    if grid.cell[x][y] == pepper.color_state:
+      grid.cell[x][y] = 0
+    elif grid.cell[x][y] != pepper.color_state:
+      grid.cell[x][y] = pepper.color_state
+    else:
+      pass
   else:
-    pass
+    print "Outside of grid"
 
 def keyPressed():
   k = str(key)
