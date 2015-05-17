@@ -14,8 +14,8 @@ class Grid:
     # Log to console
     print "Grid is %spx x %spx with a %spx margin" % (self.row, self.col,
                                                      self.margin)
-    print "Cell Width:  %s" % (self.cell_width,)
-    print "Cell Height: %s" % (self.cell_height,)
+    print "Cell Width:  %s" % (self.cell_width)
+    print "Cell Height: %s" % (self.cell_height)
 
 stage = Stage()
 ###################
@@ -26,14 +26,27 @@ stage = Stage()
 #  - Cell Dimensions (x = y)
 #  - Cell Margin
 ##################
-grid = Grid(20,20,20, 0)
-posx = posy = 0
+grid = Grid(50,50,50, 0)
+
+cell = []
+for row in range(grid.row):
+  cell.append([])
+  for col in range(grid.col):
+    cell[row].append(0)
+print cell
 
 def setup():
   size(stage.width,stage.height)
   background(stage.background_color)
 
 def draw():
+  posx = 0
+  posy = 0
   stroke(222,0,0)
-  for posx in range(grid.row):
-    rect(posx*grid.cell_width,posy,grid.cell_width,grid.cell_height)
+  for row in cell:
+    for col in row:
+      rect(posx,posy,grid.cell_width,grid.cell_height)
+      posx = posx + grid.cell_width
+    posy = posy + grid.cell_width
+    posx = 0
+
