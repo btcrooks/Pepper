@@ -18,7 +18,7 @@ class Pepper:
     elif coord == "y":
       return int(mouseY/grid.cell_height)
     else:
-      print "Please specify if you want to return 'x' or 'y' coordinate for\
+      print "Please specify if you want to return an 'x' or 'y' coordinate for\
             object: pepper.mouseCellPosition"
   # Editor State
   ## Colors
