@@ -141,3 +141,7 @@ def keyPressed():
     pepper.color_state = 3
   elif k == "e":
     pepper.color_state = 0
+  elif k == "s":
+    img  = get(0, 0, 500, 500)
+    print "Saving image..."
+    img.save("drawing.tif")
