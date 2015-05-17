@@ -20,7 +20,11 @@ class Pepper:
       print "Please specify if you want to return 'x' or 'y' coordinate for\
             object: pepper.mouseCellPosition"
   # Editor State
-  red = color(255,255,0)
+  ## Colors
+  red   = color(255,0,0)
+  green = color(0,255,0)
+  blue  = color(0,0,255)
+  ## Color State
   color_state = red
   # Log to console
   def log(self):
@@ -43,7 +47,7 @@ class Grid:
     self.cell_height = self.cell_width = cell_dimensions
     # Log to console
   def log(self):
-    print "Grid:"
+    print "Grid info:"
     print "Grid is %s x %s with a %s margin" % (self.row, self.col,
                                                      self.margin)
     print "Cell Width:  %s" % (self.cell_width)
@@ -72,26 +76,21 @@ stage = Stage()
 #  - Cell Dimensions (x = y)
 #  - Cell Margin
 ##################
-grid = Grid(2,2,10,0)
-
+grid = Grid(50,50,10,0)
 for row in range(grid.row):
   grid.cell.append([])
   for col in range(grid.col):
     grid.cell[row].append(0)
-print grid.cell
-
 
 def setup():
   size(stage.width,stage.height)
   background(stage.background_color)
   grid.cell[1][1] = 1
-  print pepper.color_state
   # Log all the things
   print "Setup Log:"
   pepper.log()
   grid.log()
   print ""
-
 
 def draw():
   posx = 0
@@ -107,6 +106,9 @@ def draw():
       posy = posy + grid.cell_height
     posx = posx + grid.cell_width
     posy = 0
+  if keyPressed:
+    if key == 'b':
+      pepper.color_state = pepper.blue
 
 def mousePressed():
   x = pepper.mouseCellPosition("x")
