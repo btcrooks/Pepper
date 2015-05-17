@@ -32,7 +32,6 @@ class Pepper:
   def log(self):
     print "Editor:"
     print "Color State: %s" % (self.color_state)
-    print ""
 
 class Stage:
   width = 1280
@@ -48,7 +47,6 @@ class Grid:
     self.cell_dimensions = cell_dimensions
     self.margin = margin
     self.cell_height = self.cell_width = cell_dimensions
-    # Log to console
   def draw(self):
     posx = 0
     posy = 0
@@ -66,6 +64,7 @@ class Grid:
         posy = posy + grid.cell_height
       posx = posx + grid.cell_width
       posy = 0
+  # Log to console
   def log(self):
     print "Grid info:"
     print "Grid is %s x %s with a %s margin" % (self.row, self.col,
@@ -108,11 +107,8 @@ def setup():
   smooth()
   # Log all the things
   print "Setup Log:"
-  print sys.path
   pepper.log()
   grid.log()
-  print ""
-  print "Logging keyCdes:"
 
 def draw():
   stroke(stage.stroke_color)
@@ -131,6 +127,7 @@ def draw():
     print ""
 
 def keyPressed():
+  print "Logging keyCdes:"
   k = str(key)
   print k
   if k == "1":
@@ -142,6 +139,6 @@ def keyPressed():
   elif k == "e":
     pepper.color_state = 0
   elif k == "s":
-    img  = get(0, 0, 500, 500)
+    img  = get(0, 0, len(grid.cell)*10, len(grid.cell)*10)
     print "Saving image..."
     img.save("drawing.tif")
