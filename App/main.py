@@ -46,6 +46,19 @@ class Grid:
     self.margin = margin
     self.cell_height = self.cell_width = cell_dimensions
     # Log to console
+  def draw(self):
+    posx = 0
+    posy = 0
+    for col in grid.cell:
+      for row in col:
+        if row == 1:
+          fill(pepper.color_state)
+        else:
+          fill(255,255,255)
+        rect(posx,posy,grid.cell_width,grid.cell_height)
+        posy = posy + grid.cell_height
+      posx = posx + grid.cell_width
+      posy = 0
   def log(self):
     print "Grid info:"
     print "Grid is %s x %s with a %s margin" % (self.row, self.col,
@@ -93,19 +106,8 @@ def setup():
   print ""
 
 def draw():
-  posx = 0
-  posy = 0
   stroke(222,0,0)
-  for col in grid.cell:
-    for row in col:
-      if row == 1:
-        fill(pepper.color_state)
-      else:
-        fill(255,255,255)
-      rect(posx,posy,grid.cell_width,grid.cell_height)
-      posy = posy + grid.cell_height
-    posx = posx + grid.cell_width
-    posy = 0
+  grid.draw()
   if keyPressed:
     if key == 'b':
       pepper.color_state = pepper.blue
