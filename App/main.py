@@ -106,7 +106,6 @@ def setup():
   size(stage.width,stage.height)
   background(stage.background_color)
   smooth()
-  grid.cell[1][1] = 1
   # Log all the things
   print "Setup Log:"
   print sys.path
@@ -119,26 +118,26 @@ def draw():
   stroke(stage.stroke_color)
   grid.draw()
 
-def mousePressed():
-  x = pepper.mouseCellPosition("x")
-  y = pepper.mouseCellPosition("y")
-  if (pepper.mouseCellPosition("x") <= len(grid.cell)) and\
-  (pepper.mouseCellPosition("y") <= len(grid.cell)):
-    if grid.cell[x][y] == pepper.color_state:
-      grid.cell[x][y] = 0
-    elif grid.cell[x][y] != pepper.color_state:
-      grid.cell[x][y] = pepper.color_state
-    else:
-      pass
-  else:
-    print "Outside of grid"
+  # Handle Mouse Events
+  try:
+    if mousePressed and (mouseButton == LEFT):
+      x = pepper.mouseCellPosition("x")
+      y = pepper.mouseCellPosition("y")
+      if (pepper.mouseCellPosition("x") <= len(grid.cell)) and\
+      (pepper.mouseCellPosition("y") <= len(grid.cell)):
+        if grid.cell[x][y] != pepper.color_state:
+          grid.cell[x][y] = pepper.color_state
+  except:
+    print ""
 
 def keyPressed():
   k = str(key)
   print k
   if k == "1":
     pepper.color_state = 1
-  if k == "2":
+  elif k == "2":
     pepper.color_state = 2
-  if k == "3":
+  elif k == "3":
     pepper.color_state = 3
+  elif k == "e":
+    pepper.color_state = 0
