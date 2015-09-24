@@ -1,2 +1,0 @@
-# Pepper
-Pyprocessing Pixel Editor
