@@ -1,6 +1,9 @@
 # Disable PyFlakes: let g:pymode_lint = 0
 #import math
+import os
 import sys
+sys.path.append(os.getcwd())
+import pepperUI
 
 class Pepper:
   # Maths
@@ -26,6 +29,7 @@ class Pepper:
   green = color(0,255,0)
   blue  = color(0,0,255)
   black = color(0)
+  translucent = color(0,0,0,0)
   ## Color State
   color_state = 1
   # Log to console
@@ -37,7 +41,10 @@ class Stage:
   width = 1280
   height = 720
   background_color = 20
-  stroke_color = 15
+  background_image = loadImage("resources/UI_Background.png")
+  stroke_color = color(0,0,0,0)
+  #stroke_color = color(15,15,15,50)
+
 
 class Grid:
   def __init__(self, row, col, cell_dimensions, margin):
@@ -59,7 +66,7 @@ class Grid:
         elif row == 3:
           fill(pepper.blue)
         else:
-          fill(25)
+          fill(0,0,0,0)
         rect(posx,posy,grid.cell_width,grid.cell_height)
         posy = posy + grid.cell_height
       posx = posx + grid.cell_width
@@ -94,8 +101,8 @@ stage = Stage()
 #  - Number of Columns
 #  - Cell Dimensions (x = y)
 #  - Cell Margin
-##################
-grid = Grid(50,50,10,0)
+#################r
+grid = Grid(150,160,5,0)
 for row in range(grid.row):
   grid.cell.append([])
   for col in range(grid.col):
@@ -103,33 +110,37 @@ for row in range(grid.row):
 
 def setup():
   size(stage.width,stage.height)
-  background(stage.background_color)
   smooth()
+  cursor(HAND)
   # Log all the things
   print "Setup Log:"
   pepper.log()
   grid.log()
+  # Graphics Buffer
+  #pg = createGraphics(500,500)
 
 def draw():
-  stroke(stage.stroke_color)
+  background(stage.background_image)
+  noStroke()
+  #stroke(stage.stroke_color)
   grid.draw()
-
   # Handle Mouse Events
+  # Kludge hard in the paint...
   try:
     if mousePressed and (mouseButton == LEFT):
       x = pepper.mouseCellPosition("x")
       y = pepper.mouseCellPosition("y")
       if (pepper.mouseCellPosition("x") <= len(grid.cell)) and\
-      (pepper.mouseCellPosition("y") <= len(grid.cell)):
+      (pepper.mouseCellPosition("y") <= len(grid.cell)*10):
         if grid.cell[x][y] != pepper.color_state:
           grid.cell[x][y] = pepper.color_state
   except:
+    # TODO: Try pass statement
     print ""
 
 def keyPressed():
-  print "Logging keyCdes:"
   k = str(key)
-  print k
+  print "Key logged: %s" % (k)
   if k == "1":
     pepper.color_state = 1
   elif k == "2":
@@ -138,7 +149,17 @@ def keyPressed():
     pepper.color_state = 3
   elif k == "e":
     pepper.color_state = 0
+  elif k == "~":
+    print "Console: "
+  elif k == "c":
+    grid.cell = []
+    for row in range(grid.row):
+      grid.cell.append([])
+      for col in range(grid.col):
+        grid.cell[row].append(0)
+    print "Screen cleard!"
+
   elif k == "s":
-    img  = get(0, 0, len(grid.cell)*10, len(grid.cell)*10)
+    img  = get(0, 0, 750, stage.height)
     print "Saving image..."
     img.save("drawing.tif")
